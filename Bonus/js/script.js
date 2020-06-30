@@ -6,9 +6,29 @@
 // La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
 
+// ----------   BONUS   ----------
 
+// chiedo all'utente un input per determinare la difficoltà
 
+var difficolta;
 
+do {
+  difficolta = prompt("Scrivi 0 per difficoltà facile, 1 per difficolta media o 2 per difficolta difficile.");
+} while (difficolta != "0" && difficolta != "1" && difficolta != "2" );
+
+// assegno una variabile che cambia tutti i valori successivi per determinare la difficolta
+
+var numDiff
+
+if (difficolta == 0) {
+  numDiff = 100;
+} else if (difficolta == 1){
+  numDiff = 80;
+} else if (difficolta == 2){
+  numDiff = 50;
+}
+
+console.log(difficolta, numDiff);
 // ------- CREO UN ARRAY CON 16 NUMERI CASUALI TRA 1 E 100. ------
 
 //Utilizzo un ciclo for e la funzione per numeri casuali. In più aggiungo un controllo perchè i numeri non possono ripetersi.
@@ -21,7 +41,7 @@ for (var i = 0; i < 16; i++) {
   // Controllo che il nuovo numero non sia già presente nell'array in modo che non ci siano ripetizioni nelle posizioni delle mine. Il ciclo while continua a generare un numero casuale nella variabile nuovo num fino a quando non genera un numero non presente nell'array mine. A quel punto il ciclo for riprende aggiungendo il nuovoNum all array mine.
 
   do {
-    nuovoNum = numeroCasualeTra(1, 100);
+    nuovoNum = numeroCasualeTra(1, numDiff);
     // console.log(nuovoNum);
   } while (cercaElemento(nuovoNum, mine)); //se la condizione è vera. cioè la funzione trova l'elemento il ciclo si ripete
 
@@ -46,7 +66,7 @@ var storicoTentativi = [];
 
 // il ciclo si ripete 100 - 16 cioè totale numeri meno le mine. La variabile esplosione diventa true se l'utente mette un numero che corrisponde ad una mina. In quel caso si interrompe il ciclo while.
 
-while(i < 100 - 16 && !esplosione){
+while(i < numDiff - 16 && !esplosione){
 
 
   // CONTROLLO LA VALIDITà DEL NUMERO INSERITO
@@ -55,7 +75,7 @@ while(i < 100 - 16 && !esplosione){
 
   do {
 
-    numeroUtente = parseInt(prompt("Inserisci un numero tra 1 e 100"));
+    numeroUtente = parseInt(prompt("Inserisci un numero tra 1 e " + numDiff));
 
     // creo un alert di errore in caso l'utente stia inserendo più volte lo stesso numero, che stia inserendo qualcosa che non è un numero o che stia inserendo un numero non compreso tra 1 e 100
 
@@ -63,15 +83,15 @@ while(i < 100 - 16 && !esplosione){
       alert("Hai già provato con questo numero");
     } else if (isNaN(numeroUtente)){
       alert("é possibile inserire solo numeri");
-    } else if (numeroUtente < 1 || numeroUtente > 100){
-      alert("Sono ammessi solo numeri tra 1 e 100");
+    } else if (numeroUtente < 1 || numeroUtente > numDiff){
+      alert("Sono ammessi solo numeri tra 1 e " + numDiff);
     }
 
     console.log(numeroUtente);
 
-  } while (cercaElemento(numeroUtente, storicoTentativi) || isNaN(numeroUtente) || numeroUtente < 1 || numeroUtente > 100);
+  } while (cercaElemento(numeroUtente, storicoTentativi) || isNaN(numeroUtente) || numeroUtente < 1 || numeroUtente > numDiff);
 
-  storicoTentativi.push(numeroUtente); // Inserisco il nuovo tentativo dell'utente nello storico dei tentativi per poterli controllare successivamente
+  storicoTentativi.push(numeroUtente); // Inserisco il nuovo tentativo dell'utente nello storico dei tentativi per poterli controllare al ciclo successivo
 
   console.log(storicoTentativi);
 
@@ -95,7 +115,7 @@ while(i < 100 - 16 && !esplosione){
 
 if (i - 1 == 0) { // L'utente ha preso una mina al primo tentativo
   console.log("AHAHAH");
-} else if (i == 100 - 16){ // L'utente ha inserito tutti i numeri escluse le mine
+} else if (i == numDiff - 16){ // L'utente ha inserito tutti i numeri escluse le mine
   console.log("Incredibile! Hai evitato tutte le mine. Complimenti!");
 } else {
   console.log("Punteggio: " + (i - 1) + " tentativi.");
