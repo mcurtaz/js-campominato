@@ -10,15 +10,40 @@
 // Piccolo test funzioni
 
 var a = numeroCasualeTra(1, 100);
-console.log(a);
+//console.log(a);
 
 var arrayProva = [12, 3, 5, 8];
 var elementoProva = 3;
-console.log(cercaElemento(elementoProva, arrayProva));
+
+//console.log(cercaElemento(elementoProva, arrayProva));
+
 
 // Creo un array con 16 numeri casuali tra 1 e 100. Utilizzo un ciclo for e la funzione per numeri casuali
 
+var mine = [];
+
+for (var i = 0; i < 16; i++) {
+  mine.push(numeroCasualeTra(1, 100));
+}
+
+console.log(mine);
+
 // Chiedo all'utente di inserire un numero. Cerco quel numero nell'array di numeri "vietati". Se c'è esco. se non c'è proseguo.
+
+var esplosione = false;
+var numeroUtente;
+var i = 0;
+
+while(i<3 && !esplosione){
+  numeroUtente = prompt("Inserisci un numero");
+  if (cercaElemento(numeroUtente, mine)){
+    console.log("BOOM!");
+    esplosione = true;
+  }
+  i++;
+}
+
+
 
 
 
