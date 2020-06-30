@@ -21,9 +21,20 @@ var elementoProva = 3;
 // Creo un array con 16 numeri casuali tra 1 e 100. Utilizzo un ciclo for e la funzione per numeri casuali
 
 var mine = [];
+var nuovoNum;
 
 for (var i = 0; i < 16; i++) {
-  mine.push(numeroCasualeTra(1, 100));
+
+  // Controllo che il nuovo numero non sia già presente nell'array in modo che non ci siano ripetizioni nelle posizioni delle termine. Il ciclo while continua a generare un numero casuale nella variabile nuovo num fino a quando non genera un numero non presente nell'array mine. A quel punto il ciclo for riprende aggiungendo il nuovoNum all array mine.
+
+  do {
+    nuovoNum = numeroCasualeTra(1, 100);
+    // console.log(nuovoNum);
+  } while (cercaElemento(nuovoNum, mine));
+
+
+  mine.push(nuovoNum);
+
 }
 
 console.log(mine);
@@ -34,7 +45,9 @@ var esplosione = false;
 var numeroUtente;
 var i = 0;
 
-while(i<3 && !esplosione){
+// il ciclo si ripete 100 - 16 cioè totale numeri meno le mine. La variabile esplosione diventa true se l'utente mette un numero che corrisponde ad una mina. In quel caso si interrompe il ciclo while.
+
+while(i < 3 && !esplosione){
   numeroUtente = prompt("Inserisci un numero");
   if (cercaElemento(numeroUtente, mine)){
     console.log("BOOM!");
@@ -43,6 +56,15 @@ while(i<3 && !esplosione){
   i++;
 }
 
+// Per restituire il numero di tentativi utilizzo semplicemente la variabile i. Alla fine del ciclo comunque i viene incrementato di 1 quindi il numero di tentativi è i - 1. Tranne nel caso che l'utente eviti tutte le mine. In quel caso i finisce con i = 100 - numero di mine.
+
+if (i - 1 == 0) { // L'utente ha preso una mina al primo tentativo
+  console.log("AHAHAH");
+} else if (i == 3){ // L'utente ha inserito tutti i numeri escluse le mine
+  console.log("Incredibile! Hai evitato tutte le mine. Complimenti!");
+} else {
+  console.log("Punteggio: " + (i - 1) + " tentativi.");
+}
 
 
 
