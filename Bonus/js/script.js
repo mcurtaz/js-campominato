@@ -29,6 +29,8 @@ if (difficolta == 0) {
 }
 
 console.log(difficolta, numDiff);
+
+
 // ------- CREO UN ARRAY CON 16 NUMERI CASUALI TRA 1 E 100. ------
 
 //Utilizzo un ciclo for e la funzione per numeri casuali. In più aggiungo un controllo perchè i numeri non possono ripetersi.
@@ -36,21 +38,15 @@ console.log(difficolta, numDiff);
 var mine = [];
 var nuovoNum;
 
-for (var i = 0; i < 16; i++) {
-
-  // Controllo che il nuovo numero non sia già presente nell'array in modo che non ci siano ripetizioni nelle posizioni delle mine. Il ciclo while continua a generare un numero casuale nella variabile nuovo num fino a quando non genera un numero non presente nell'array mine. A quel punto il ciclo for riprende aggiungendo il nuovoNum all array mine.
-
-  do {
-    nuovoNum = numeroCasualeTra(1, numDiff);
-    // console.log(nuovoNum);
-  } while (cercaElemento(nuovoNum, mine)); //se la condizione è vera. cioè la funzione trova l'elemento il ciclo si ripete
-
-
-  mine.push(nuovoNum);
-
+while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
+  nuovoNum = numeroCasualeTra(1, 20);
+  if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
+    mine.push(nuovoNum);
+  }
 }
 
 console.log(mine);
+
 
 
 
