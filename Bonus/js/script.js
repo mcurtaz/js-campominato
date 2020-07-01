@@ -1,24 +1,23 @@
 // ----------   BONUS   ----------
 
 // chiedo all'utente un input per determinare la difficoltà
+// creo una variabile numDiff che cambierà diversi i valori successivi per determinare la difficolta
 
-var difficolta;
+var numDiff = 0;
 
-do {
-  difficolta = prompt("Scrivi 0 per difficoltà facile, 1 per difficolta media o 2 per difficolta difficile.");
-} while (difficolta != "0" && difficolta != "1" && difficolta != "2" );
+while (numDiff == 0){// piccolo controllo per verificare che l'utente inserisca effettivamente 0 1 o 2
 
-// assegno una variabile che cambia tutti i valori successivi per determinare la difficolta
+  var difficolta = parseInt(prompt("Scrivi 0 per difficoltà facile, 1 per difficolta media o 2 per difficolta difficile."));
 
-var numDiff
-
-if (difficolta == 0) {
-  numDiff = 100;
-} else if (difficolta == 1){
-  numDiff = 80;
-} else if (difficolta == 2){
-  numDiff = 50;
+  if (difficolta == 0) {
+    numDiff = 100;
+  } else if (difficolta == 1){
+    numDiff = 80;
+  } else if (difficolta == 2){
+    numDiff = 50;
+  }
 }
+
 
 console.log(difficolta, numDiff);
 
