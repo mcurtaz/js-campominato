@@ -89,7 +89,7 @@ var numeroUtente;
 var storicoTentativi = [];
 
 while (storicoTentativi.length < 100 - 16 && !esplosione ){ //se il numero di tentativi registrati nell'array storico tentativi è minore delle posizioni - il numero di mine e non c'è stata esplosione (quindi l'utente non ha inserito un numero corrispondente ad una mina il ciclo prosegue). Questo funziona perchè lo storico tentativi viene implementato solo se l'utente inserisce un input valido.
-  
+
   numeroUtente = parseInt(prompt("Inserisci un numero"));
 
   if (isValid(1, 100, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){//se il numero dell'utente è valido (funzione di controllo dell'input) e non è già presente nello storico tentativi procedo a verificare se il numero corrisponde ad una mina o no
@@ -104,7 +104,7 @@ while (storicoTentativi.length < 100 - 16 && !esplosione ){ //se il numero di te
   } else { // se il numero non è valido possono esserci diversi motivi: 1 è stato inserito un numero già tentato in precedenza. 2 è stato inserito un numero non compreso nel range accettato. 3 è stato inserito qualcosa che non è un numero
     if (cercaElemento(numeroUtente, storicoTentativi)) {
       alert("Hai già provato con questo numero");
-    } else if (numeroUtente < 0 || numeroUtente > 100){
+    } else if (numeroUtente < 1 || numeroUtente > 100){
       alert("Sono ammessi solo numeri compresi tra 1 e 100");
     } else {
       alert("Input non valido");

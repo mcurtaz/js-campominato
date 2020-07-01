@@ -1,11 +1,3 @@
-// Il computer deve generare 16 numeri casuali tra 1 e 100.
-// I numeri non possono essere duplicati
-// In seguito deve chiedere all’utente (100 - 16) volte di inserire un numero alla volta, sempre compreso tra 1 e 100.
-// L’utente non può inserire più volte lo stesso numero.
-// Se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti si continua chiedendo all’utente un altro numero.
-// La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
-// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
-
 // ----------   BONUS   ----------
 
 // chiedo all'utente un input per determinare la difficoltà
@@ -33,13 +25,11 @@ console.log(difficolta, numDiff);
 
 // ------- CREO UN ARRAY CON 16 NUMERI CASUALI TRA 1 E 100. ------
 
-//Utilizzo un ciclo for e la funzione per numeri casuali. In più aggiungo un controllo perchè i numeri non possono ripetersi.
-
 var mine = [];
 var nuovoNum;
 
 while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
-  nuovoNum = numeroCasualeTra(1, 20);
+  nuovoNum = numeroCasualeTra(1, 100);
   if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
     mine.push(nuovoNum);
   }
@@ -52,72 +42,51 @@ console.log(mine);
 
 // -------- CHIEDO IL NUMERO ALL'UTENTE E VERIFICO I TENTATIVI ---------
 
-
-// Chiedo all'utente di inserire un numero. Cerco quel numero nell'array di numeri "vietati". Se c'è esco. se non c'è proseguo.
-
 var esplosione = false;
 var numeroUtente;
-var i = 0;
 var storicoTentativi = [];
 
-// il ciclo si ripete 100 - 16 cioè totale numeri meno le mine. La variabile esplosione diventa true se l'utente mette un numero che corrisponde ad una mina. In quel caso si interrompe il ciclo while.
+while (storicoTentativi.length < numDiff - 16 && !esplosione ){ //verifica validità input
 
-while(i < numDiff - 16 && !esplosione){
+  numeroUtente = parseInt(prompt("Inserisci un numero"));
 
+  if (isValid(1, numDiff, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){//in caso di input valido lo confronto con mine[]
 
-  // CONTROLLO LA VALIDITà DEL NUMERO INSERITO
+    if (cercaElemento(numeroUtente, mine)) {
 
-  // controllo con un while che il nuovo numero inserito non sia già stato inserito verificando nell array storico tentativi. Verifico che quello inserito dall'utente sia un numero e che sia tra 1 e 100.
+      console.log("BOOM");
+      esplosione = true;
 
-  do {
+    } else {
+      storicoTentativi.push(numeroUtente);
+    }
 
-    numeroUtente = parseInt(prompt("Inserisci un numero tra 1 e " + numDiff));
-
-    // creo un alert di errore in caso l'utente stia inserendo più volte lo stesso numero, che stia inserendo qualcosa che non è un numero o che stia inserendo un numero non compreso tra 1 e 100
+  } else { // Input non valido diversi alert per diversi motivi
 
     if (cercaElemento(numeroUtente, storicoTentativi)) {
       alert("Hai già provato con questo numero");
-    } else if (isNaN(numeroUtente)){
-      alert("é possibile inserire solo numeri");
     } else if (numeroUtente < 1 || numeroUtente > numDiff){
-      alert("Sono ammessi solo numeri tra 1 e " + numDiff);
+      alert("Sono ammessi solo numeri compresi tra 1 e " + numDiff);
+    } else {
+      alert("Input non valido");
     }
 
-    console.log(numeroUtente);
-
-  } while (cercaElemento(numeroUtente, storicoTentativi) || isNaN(numeroUtente) || numeroUtente < 1 || numeroUtente > numDiff);
-
-  storicoTentativi.push(numeroUtente); // Inserisco il nuovo tentativo dell'utente nello storico dei tentativi per poterli controllare al ciclo successivo
-
-  console.log(storicoTentativi);
-
-  // CONTROLLO SE IL NUMERO CORRISPONDE AD UNA MINA
-
-  if (cercaElemento(numeroUtente, mine)){
-    console.log("BOOM!");
-    esplosione = true;
   }
 
-
-  i++;
-
 }
-
 
 //  ------ RESTITUISCO IL PUNTEGGIO  -------
 
-// Per restituire il numero di tentativi utilizzo semplicemente la variabile i. Alla fine del ciclo comunque i viene incrementato di 1 quindi il numero di tentativi è i - 1 (è vero che i parte da 0 ma l'ultimo tentativo fa esplodere la mina quindi non si conta). Tranne nel caso che l'utente eviti tutte le mine. In quel caso i finisce con i = 100 - numero di mine.
+// Per restituire il numero di tentativi utilizzo length di storico tentativi
 
 
-if (i - 1 == 0) { // L'utente ha preso una mina al primo tentativo
+if (storicoTentativi.length == 0) { // L'utente ha preso una mina al primo tentativo
   console.log("AHAHAH");
-} else if (i == numDiff - 16){ // L'utente ha inserito tutti i numeri escluse le mine
+} else if (storicoTentativi.length == numDiff - 16){ // L'utente ha inserito tutti i numeri escluse le mine
   console.log("Incredibile! Hai evitato tutte le mine. Complimenti!");
 } else {
-  console.log("Punteggio: " + (i - 1) + " tentativi.");
+  console.log("Punteggio: " + storicoTentativi.length);
 }
-
-
 
 
 
@@ -143,4 +112,14 @@ function cercaElemento(elem, array){
   }
 
   return false;
+}
+
+// funzione di controllo degli input dell'utente nel giocatore
+
+function isValid(min, max, number){
+  if (number >= min && number <= max && !isNaN(number)) { // se il valore è un numero && è maggiore o uguale al minimo && è minore o uguale al massimo la funzione restituisce true. usando l'operatore && la condizione è vera solo se sono vere contemporaneamente tutte e tre le condizioni.
+    return true;
+  } else{
+    return false;
+  }
 }
