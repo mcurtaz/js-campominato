@@ -28,7 +28,7 @@ var mine = [];
 var nuovoNum;
 
 while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
-  nuovoNum = numeroCasualeTra(1, 100);
+  nuovoNum = numeroCasualeTra(1, numDiff);
   if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
     mine.push(nuovoNum);
   }
