@@ -32,8 +32,9 @@
 
 var mine = [];
 var nuovoNum;
+var quanteMine = 16;
 
-while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
+while(mine.length < quanteMine){ //ripeto il while finchè non ho generato 16 mine
   nuovoNum = numeroCasualeTra(1, 100);
   if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
     mine.push(nuovoNum);
@@ -88,7 +89,7 @@ var esplosione = false;
 var numeroUtente;
 var storicoTentativi = [];
 
-while (storicoTentativi.length < 100 - 16 && !esplosione ){ //se il numero di tentativi registrati nell'array storico tentativi è minore delle posizioni - il numero di mine e non c'è stata esplosione (quindi l'utente non ha inserito un numero corrispondente ad una mina il ciclo prosegue). Questo funziona perchè lo storico tentativi viene implementato solo se l'utente inserisce un input valido.
+while (storicoTentativi.length < 100 - quanteMine && !esplosione ){ //se il numero di tentativi registrati nell'array storico tentativi è minore delle posizioni - il numero di mine e non c'è stata esplosione (quindi l'utente non ha inserito un numero corrispondente ad una mina il ciclo prosegue). Questo funziona perchè lo storico tentativi viene implementato solo se l'utente inserisce un input valido.
 
   numeroUtente = parseInt(prompt("Inserisci un numero"));
 
@@ -123,7 +124,7 @@ console.log(storicoTentativi, storicoTentativi.length);
 
 if (storicoTentativi.length == 0) { // L'utente ha preso una mina al primo tentativo
   console.log("AHAHAH");
-} else if (storicoTentativi.length == 100 - 16){ // L'utente ha inserito tutti i numeri escluse le mine
+} else if (storicoTentativi.length == 100 - quanteMine){ // L'utente ha inserito tutti i numeri escluse le mine
   console.log("Incredibile! Hai evitato tutte le mine. Complimenti!");
 } else {
   console.log("Punteggio: " + storicoTentativi.length);

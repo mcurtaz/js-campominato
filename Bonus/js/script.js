@@ -26,8 +26,8 @@ console.log(difficolta, numDiff);
 
 var mine = [];
 var nuovoNum;
-
-while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
+var quanteMine = 16;
+while(mine.length < quanteMine){ //ripeto il while finchè non ho generato 16 mine
   nuovoNum = numeroCasualeTra(1, numDiff);
   if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
     mine.push(nuovoNum);
@@ -45,13 +45,13 @@ var esplosione = false;
 var numeroUtente;
 var storicoTentativi = [];
 
-while (storicoTentativi.length < numDiff - 16 && !esplosione ){ //verifica validità input
+while (storicoTentativi.length < numDiff - quanteMine && !esplosione ){  // procedo finche non i tentativi sono tutti i numeri meno le mine (partita vinta) o l'utente ha preso una mina quindi esplosione è true
 
   numeroUtente = parseInt(prompt("Inserisci un numero"));
 
-  if (isValid(1, numDiff, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){//in caso di input valido lo confronto con mine[]
+  if (isValid(1, numDiff, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){ //verifica validità input
 
-    if (cercaElemento(numeroUtente, mine)) {
+    if (cercaElemento(numeroUtente, mine)) {//in caso di input valido lo confronto con mine[]
 
       console.log("BOOM");
       esplosione = true;
@@ -81,7 +81,7 @@ while (storicoTentativi.length < numDiff - 16 && !esplosione ){ //verifica valid
 
 if (storicoTentativi.length == 0) { // L'utente ha preso una mina al primo tentativo
   console.log("AHAHAH");
-} else if (storicoTentativi.length == numDiff - 16){ // L'utente ha inserito tutti i numeri escluse le mine
+} else if (storicoTentativi.length == numDiff - quanteMine){ // L'utente ha inserito tutti i numeri escluse le mine
   console.log("Incredibile! Hai evitato tutte le mine. Complimenti!");
 } else {
   console.log("Punteggio: " + storicoTentativi.length);

@@ -7,6 +7,7 @@ var numDiff;
 var mine;
 var storicoTentativi; // questa variabile viene inizializzata premendo genera campo in modo che si possano giocare più partite sullo stesso campo
 var piuPartite;
+var quanteMine = 16;
 document.getElementById("btnGenera").addEventListener("click", function(){
 
   //azzero i giochi precedenti
@@ -38,7 +39,7 @@ document.getElementById("btnGenera").addEventListener("click", function(){
 
   var nuovoNum;
 
-  while(mine.length < 16){ //ripeto il while finchè non ho generato 16 mine
+  while(mine.length < quanteMine){ //ripeto il while finchè non ho generato 16 mine
     nuovoNum = numeroCasualeTra(1, numDiff);
     if (!cercaElemento(nuovoNum, mine)) { // genero un nuovo numero e lo aggiungo a mine solo se non è già presente nell'array mine
       mine.push(nuovoNum);
@@ -74,7 +75,7 @@ document.getElementById("btnGioca").addEventListener("click", function(){
 
 
 
-  while (storicoTentativi.length < numDiff - 16 && !esplosione ){ //verifica validità input
+  while (storicoTentativi.length < numDiff - quanteMine && !esplosione ){ // procedo finche non i tentativi sono tutti i numeri meno le mine (partita vinta) o l'utente ha preso una mina quindi esplosione è true
 
     numeroUtente = parseInt(prompt("Inserisci un numero"));
 
@@ -82,13 +83,12 @@ document.getElementById("btnGioca").addEventListener("click", function(){
     // variabile con indirizzo della casella nell'html
     var casella = document.getElementById("pos-" + numeroUtente);
 
-    if (isValid(1, numDiff, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){//in caso di input valido lo confronto con mine[]
+    if (isValid(1, numDiff, numeroUtente) && !cercaElemento(numeroUtente, storicoTentativi)){  //verifica validità input
 
-      if (cercaElemento(numeroUtente, mine)) {
+      if (cercaElemento(numeroUtente, mine)) {//in caso di input valido lo confronto con mine[]
 
         console.log("BOOM");
         esplosione = true;
-        storicoTentativi.push(numeroUtente); //pusho nello storico anche le mine in modo che si possano giocare più partite senza inizializzare il campo
         // HTML
         // se nella casella c'è una mina metto l'icona di una bomba e cambio lo sfondo
         casella.innerHTML = "<i class=\"fas fa-bomb\"></i>";
@@ -124,10 +124,10 @@ document.getElementById("btnGioca").addEventListener("click", function(){
   var esito = document.getElementById("esito");
   if (storicoTentativi.length == 0) { // L'utente ha preso una mina al primo tentativo
     esito.innerHTML = "AHAHAH Mina al primo tentativo!!";
-  } else if (storicoTentativi.length == numDiff - 16){ // L'utente ha inserito tutti i numeri escluse le mine
+  } else if (storicoTentativi.length == numDiff - quanteMine){ // L'utente ha inserito tutti i numeri escluse le mine
     esito.innerHTML = "Incredibile! Hai evitato tutte le mine. Complimenti!";
   } else {
-    esito.innerHTML = "Non male... Punteggio: " + (storicoTentativi.length - 1);
+    esito.innerHTML = "Non male... Punteggio: " + (storicoTentativi.length);
   }
   // con più partite sullo stesso campo resta da risolvere la questione punteggio
 
